@@ -3,6 +3,9 @@ import { initializeTheme } from '@/composables/useAppearance';
 import AppLayout from '@/layouts/AppLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
+import AdminLayout from '@/layouts/user/AdminLayout.vue';
+import ManagerLayout from '@/layouts/user/ManagerLayout.vue';
+import MemberLayout from '@/layouts/user/Member.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -15,6 +18,12 @@ createInertiaApp({
                 return null;
             case name.startsWith('auth/'):
                 return AuthLayout;
+            case name.startsWith('Admin/'):
+                return AdminLayout;
+            case name.startsWith('Manager/'):
+                return ManagerLayout;
+            case name.startsWith('Member/'):
+                return MemberLayout;
             case name.startsWith('settings/'):
                 return [AppLayout, SettingsLayout];
             default:

@@ -4,20 +4,22 @@ import AppShell from '@/components/AppShell.vue';
 import AppSidebar from '@/components/AppSidebar.vue';
 import AppSidebarHeader from '@/components/AppSidebarHeader.vue';
 import { Toaster } from '@/components/ui/sonner';
-import type { BreadcrumbItem } from '@/types';
+import type { BreadcrumbItem, NavGroup } from '@/types';
 
 type Props = {
     breadcrumbs?: BreadcrumbItem[];
+    groups?: NavGroup[];
 };
 
 withDefaults(defineProps<Props>(), {
     breadcrumbs: () => [],
+    groups: () => [],
 });
 </script>
 
 <template>
     <AppShell variant="sidebar">
-        <AppSidebar />
+        <AppSidebar :groups="groups" />
         <AppContent variant="sidebar" class="overflow-x-hidden">
             <AppSidebarHeader :breadcrumbs="breadcrumbs" />
             <slot />

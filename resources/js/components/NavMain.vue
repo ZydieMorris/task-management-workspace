@@ -8,31 +8,34 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { useCurrentUrl } from '@/composables/useCurrentUrl';
-import type { NavItem } from '@/types';
+import type { NavGroup } from '@/types';
 
 defineProps<{
-    items: NavItem[];
+    groups: NavGroup[];
 }>();
 
 const { isCurrentUrl } = useCurrentUrl();
 </script>
 
 <template>
-    <SidebarGroup class="px-2 py-0">
-        <SidebarGroupLabel>Platform</SidebarGroupLabel>
-        <SidebarMenu>
-            <SidebarMenuItem v-for="item in items" :key="item.title">
-                <SidebarMenuButton
-                    as-child
-                    :is-active="isCurrentUrl(item.href)"
-                    :tooltip="item.title"
-                >
-                    <Link :href="item.href">
-                        <component :is="item.icon" />
-                        <span>{{ item.title }}</span>
-                    </Link>
-                </SidebarMenuButton>
-            </SidebarMenuItem>
-        </SidebarMenu>
-    </SidebarGroup>
+    <template v-for="group in groups" :key="group.label ?? '_'">
+        <SidebarGroup class="px-2 py-0">
+            <SidebarGroupLabel v-if="group.label">{{ group.label }}</SidebarGroupLabel>
+            <SidebarMenu>
+                <SidebarMenuItem v-for="item in group.items" :key="item.title">
+                    <SidebarMenuButton
+                        as-child
+                        :is-active="isCurrentUrl(item.href)"
+                        :tooltip="item.title"
+                    >
+                        <Link :href="item.href">
+                            <component :is="item.icon" />
+                            <span>{{ item.title }}</span>
+                            <span v-if="item.label" class="ml-auto text-xs text-muted-foreground">{{ item.label }}</span>
+                        </Link>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarMenu>
+        </SidebarGroup>
+    </template>
 </template>
