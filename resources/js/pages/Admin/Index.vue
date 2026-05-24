@@ -1,6 +1,7 @@
 <template>
     <div class="p-10">
           <GreetingsUser :user="user"/>
+          hello world 
     </div>
 </template>
 
