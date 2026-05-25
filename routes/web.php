@@ -2,6 +2,7 @@
 use App\Http\Controllers\admin\DashboardAdminController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\PositionController;
+use App\Http\Controllers\admin\ProjectController;
 use App\Http\Controllers\manager\DashboardManagerController;
 use App\Http\Controllers\member\DashboardMemberController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,7 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'verified'])->group(functio
     Route::resource('dashboard', DashboardAdminController::class);
     Route::resource('users', UserController::class);
     Route::resource('positions', PositionController::class);
+    Route::resource('projects', ProjectController::class);
 
 
 

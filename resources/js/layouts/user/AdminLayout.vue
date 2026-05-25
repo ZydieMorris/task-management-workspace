@@ -13,7 +13,7 @@ const groups: NavGroup[] = [
         items: [
             { title: 'Dashboard', href: '/admin/dashboard', icon: LayoutGrid },
             { title: 'Users', href: '/admin/users', icon: Users },
-            { title: 'Projects', href: '/admin/positions', icon: User2 },
+            { title: 'Projects', href: '/admin/projects', icon: User2 },
             { title: 'Announcement', href: '/admin/settings', icon: Settings },
         ],
     },
