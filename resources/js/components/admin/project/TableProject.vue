@@ -20,8 +20,8 @@
 
       </TableRow>
     </TableHeader>
-    <TableBody  v-for="p in projects" :key="p.id">
-      <TableRow>
+    <TableBody v-if="projects?.length > 0">
+      <TableRow v-for="p in projects" :key="p.id">
         <TableCell>
             {{ p.project_name }}
         </TableCell>
@@ -62,6 +62,12 @@
         </Popover>
         </TableCell>
       </TableRow>
+    </TableBody>
+
+    <TableBody v-else>
+        <TableRow>
+            <TableCell class="text-center" colspan="5">No projects found.</TableCell>
+        </TableRow>
     </TableBody>
   </Table>
     </div>

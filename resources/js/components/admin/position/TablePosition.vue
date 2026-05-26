@@ -11,11 +11,10 @@
 
       </TableRow>
     </TableHeader>
-    <TableBody v-for="p in positions" :key="p.id">
-      <TableRow>
+    <TableBody v-if="positions?.length > 0">
+      <TableRow  v-for="p in positions" :key="p.id">
         <TableCell class="flex justify-between">
           {{p.position_name  }}
-
           <Popover>
             <PopoverTrigger> <Ellipsis class="w-4 "/></PopoverTrigger>
             <PopoverContent class=" text-sm " side="left" align="start">
@@ -44,7 +43,14 @@
         </TableCell>
       </TableRow>
     </TableBody>
-  </Table>
+    
+    <TableBody v-else>
+        <TableRow>
+            <TableCell class="text-center" colspan="5">No positions found.</TableCell>
+        </TableRow>
+    </TableBody>
+
+  </Table>  
     </div>
 </template>
 
