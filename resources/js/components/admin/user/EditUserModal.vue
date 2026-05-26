@@ -64,7 +64,7 @@
             </Button>
           </DialogClose>
           <Button type="submit" :disabled="form.processing">
-            Edit User
+            Save Changes
           </Button>
         </DialogFooter>
     </form>

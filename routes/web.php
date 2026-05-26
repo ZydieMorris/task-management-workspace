@@ -21,7 +21,6 @@ Route::middleware(['auth', 'verified'])->get('/redirect', function(){
         } else {
             abort(403);
         }
-
 })->name('dashboard');
 
 Route::prefix('admin')->middleware(['auth', 'admin', 'verified'])->group(function () {

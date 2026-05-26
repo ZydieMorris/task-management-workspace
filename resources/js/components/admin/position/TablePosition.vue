@@ -8,7 +8,6 @@
         <TableHead >
           Position
         </TableHead>
-
       </TableRow>
     </TableHeader>
     <TableBody v-if="positions?.length > 0">

@@ -8,11 +8,16 @@ use App\Models\Position;
 
 class PositionController extends Controller
 {
-     public function index()
+     public function index(Request $request)
     {
+
+
         return Inertia::render('Admin/user/position/Position', [
-            'positions' => Position::all(),
-      ]);
+            'positions' => Position::query()->
+            when($request->search,function($query) use ($request) {
+                $query->where('position_name', 'like', '%' . $request->search . '%');
+            })->get()
+]);
     }
 
     /**
