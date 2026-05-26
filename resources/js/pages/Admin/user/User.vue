@@ -22,6 +22,19 @@
                     </SelectItem>
                     </SelectContent>
                 </Select>
+
+                  <Select v-model="role">
+                    <SelectTrigger>
+                    <SelectValue placeholder="Select a Role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                    <SelectItem value="all">All Roles</SelectItem>
+                    <SelectItem v-for="r in roles" :key="r" :value="r">
+                        {{ r }}
+                    </SelectItem>
+                    </SelectContent>
+                </Select>
+                    
             </div>
 
             <div>
@@ -66,14 +79,15 @@ const showEdit = ref(false);
 const selectedUser = ref(null);
 const search = ref('');
 const position = ref('');
+const role = ref('');
 
 function onEdit(user: any){
     selectedUser.value = user;
     showEdit.value = true;
 }
 
-watchDebounced([search, position],([newValue, newPosition]) => {
-    router.get('/admin/users', {search:newValue, position: newPosition === 'all' ? null : newPosition}, {preserveState: true});
+watchDebounced([search, position, role],([newValue, newPosition, newRole]) => {
+    router.get('/admin/users', {search:newValue, position: newPosition === 'all' ? null : newPosition, role: newRole === 'all' ? null : newRole    }, {preserveState: true});
 }, 500);
 
 </script>

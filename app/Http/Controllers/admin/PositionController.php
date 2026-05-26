@@ -35,7 +35,6 @@ class PositionController extends Controller
     {
         $validated = $request->validate([
             'position_name' => 'required|string|max:255|unique:positions,position_name',
-
         ]);
 
         Position::create([

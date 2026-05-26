@@ -22,6 +22,9 @@ class UserController extends Controller
                 ->when($request->position, function($query) use ($request) {
                     $query->where('position', $request->position);
                 })
+                ->when($request->role, function($query) use ($request) {
+                    $query->where('role', $request->role);
+                })
                 ->get(),
         ]);
     }
