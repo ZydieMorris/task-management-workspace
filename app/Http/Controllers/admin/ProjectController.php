@@ -11,11 +11,15 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
     return Inertia::render('Admin/project/Index', [
         'severity' => ['Low', 'Medium', 'High'],
-        'projects' => Project::all(),
+        'projects' => Project::query()
+        ->when($request->search, function($query) use ($request) {
+            $query->where('project_name', 'like', '%' . $request->search . '%');
+        })
+        ->get(),
     ]);
     }
 

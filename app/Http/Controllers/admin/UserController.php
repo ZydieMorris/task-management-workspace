@@ -9,12 +9,20 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return Inertia::render('Admin/user/User', [
             'positions' => Position::all(),
             'roles' => ['admin', 'manager', 'member'],
-            'users' => User::all(),
+
+            'users' => User::query()
+                ->when($request->search, function($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->when($request->position, function($query) use ($request) {
+                    $query->where('position', $request->position);
+                })
+                ->get(),
         ]);
     }
 
