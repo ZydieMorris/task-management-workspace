@@ -21,7 +21,7 @@
       </TableRow>
     </TableHeader>
     <TableBody v-if="projects?.length > 0">
-      <TableRow v-for="p in projects" :key="p.id">
+      <TableRow v-for="p in projects" :key="p.id" @click="GoToSelectedProject(p.id)">
         <TableCell>
             {{ p.project_name }}
         </TableCell>
@@ -35,7 +35,7 @@
             {{ p.deployment_date }}
         </TableCell>
 
-        <TableCell class="flex justify-between">
+        <TableCell @click.stop class="flex justify-between">
           <Popover>
             <PopoverTrigger> <Ellipsis class="w-4 "/></PopoverTrigger>
             <PopoverContent class=" text-sm " side="left" align="start">
@@ -113,6 +113,10 @@ const emit = defineEmits(['edit']);
 
 function deleteProject(id: number){
     router.delete(`/admin/projects/${id}`)
+}
+
+function GoToSelectedProject(id: number){
+    router.visit(`/admin/projects/${id}`)
 }
 
 </script>
