@@ -40,7 +40,7 @@ router.get('/admin/projects', {search:newValue}, {preserveState: true});
         </div>
 
         <div class="mt-8">
-         
+
             <TableProject :projects="projects" @edit="openEditModal"/>
 
             <EditProjectModal :severity="severity" :project="selectedProject" v-model:open="showEditModal"/>

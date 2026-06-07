@@ -3,6 +3,7 @@ use App\Http\Controllers\admin\DashboardAdminController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\PositionController;
 use App\Http\Controllers\admin\ProjectController;
+use App\Http\Controllers\admin\TaskController;
 use App\Http\Controllers\manager\DashboardManagerController;
 use App\Http\Controllers\member\DashboardMemberController;
 use Illuminate\Support\Facades\Route;
@@ -28,7 +29,8 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'verified'])->group(functio
     Route::resource('users', UserController::class);
     Route::resource('positions', PositionController::class);
     Route::resource('projects', ProjectController::class);
-
+    Route::resource('projects.tasks', TaskController::class)->only(['index']);
+    Route::get('projects/{project}/members', [ProjectController::class, 'members'])->name('projects.members');
 
 
 });

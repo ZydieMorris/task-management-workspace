@@ -74,6 +74,13 @@ class ProjectController extends Controller
         //
     }
 
+    public function members(Project $project)
+    {
+        return Inertia::render('Admin/project/tabs/Members', [
+            'projects' => $project,
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

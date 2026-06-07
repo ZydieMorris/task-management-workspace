@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -13,4 +13,9 @@ class Project extends Model
         'deployment_date',
 
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

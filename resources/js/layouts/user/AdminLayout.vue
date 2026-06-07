@@ -3,9 +3,6 @@ import { LayoutGrid, Users, Settings, User2 } from 'lucide-vue-next';
 import AppSidebarLayout from '@/layouts/app/AppSidebarLayout.vue';
 import type { BreadcrumbItem, NavGroup } from '@/types';
 
-const { breadcrumbs = [] } = defineProps<{
-    breadcrumbs?: BreadcrumbItem[];
-}>();
 
 const groups: NavGroup[] = [
     {
@@ -22,7 +19,7 @@ const groups: NavGroup[] = [
 </script>
 
 <template>
-    <AppSidebarLayout :breadcrumbs="breadcrumbs" :groups="groups">
+    <AppSidebarLayout  :groups="groups">
         <slot />
     </AppSidebarLayout>
 </template>
