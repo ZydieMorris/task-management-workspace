@@ -4,7 +4,7 @@ export type TaskStatus =  | 'To Do'
     | 'On Hold'
     | 'Completed';
 
-export type TaskPriority = 'low' | 'medium' | 'high';
+export type TaskPriority = 'Low' | 'Medium' | 'High';
 
 export type Task ={
     id: number;

@@ -29,7 +29,7 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'verified'])->group(functio
     Route::resource('users', UserController::class);
     Route::resource('positions', PositionController::class);
     Route::resource('projects', ProjectController::class);
-    Route::resource('projects.tasks', TaskController::class)->only(['index']);
+    Route::resource('projects.tasks', TaskController::class);
     Route::get('projects/{project}/members', [ProjectController::class, 'members'])->name('projects.members');
 
 

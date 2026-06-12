@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Dialog>
+        <Dialog v-model:open="open">
             <DialogTrigger as-child>
                 <Button class="text-xs w-auto h-7">
                     <Plus/> Add Task
@@ -16,17 +16,18 @@
         <div class="grid gap-4">
             <!-- task name -->
           <div class="grid gap-3">
-            <Label >Task Name</Label>
+            <Label>Task Name</Label>
             <Input v-model="form.task_name" placeholder="e.g "/>
+            <span class="text-red-500 text-sm">{{ form.errors.task_name }}</span>
           </div>
           <div class="grid gap-3">
-            <Label >Description</Label>
-            <Textarea key="" placeholder="add notes.." />
+            <Label>Description</Label>
+            <Textarea v-model="form.task_description" placeholder="add notes.." />
           </div>
 
           <!-- task status -->
           <div class="grid gap-3">
-            <Label >Status</Label>
+            <Label>Status</Label>
             <Select v-model="form.task_status">
                 <SelectTrigger class="w-[180px]">
                 <SelectValue placeholder="Select a status" />
@@ -40,11 +41,12 @@
                 </SelectGroup>
                 </SelectContent>
             </Select>
+            <span class="text-red-500 text-sm">{{ form.errors.task_status }}</span>
           </div>
 
             <!-- task priority -->
              <div class="grid gap-3">
-            <Label >Priority</Label>
+            <Label>Priority</Label>
             <Select v-model="form.task_priority">
                 <SelectTrigger class="w-[180px]">
                 <SelectValue placeholder="Select a priority" />
@@ -59,17 +61,19 @@
                 </SelectGroup>
                 </SelectContent>
             </Select>
+            <span class="text-red-500 text-sm">{{ form.errors.task_priority }}</span>
           </div>
 
            <!-- task deadline -->
              <div class="grid gap-3">
-            <Label >Deadline</Label>
+            <Label>Deadline</Label>
             <Input type="date" v-model="form.task_deadline"/>
+            <span class="text-red-500 text-sm">{{ form.errors.task_deadline }}</span>
           </div>
 
           <!-- Assign to -->
         <div class="grid gap-3">
-            <Label >Assign To</Label>
+            <Label>Assign To</Label>
             <Select v-model="form.assign_to">
                 <SelectTrigger class="w-[180px]">
                 <SelectValue placeholder="Select a user" />
@@ -84,6 +88,7 @@
                 </SelectGroup>
                 </SelectContent>
             </Select>
+            <span class="text-red-500 text-sm">{{ form.errors.assign_to }}</span>
           </div>
 
         </div>
@@ -93,7 +98,7 @@
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit">
+          <Button type="submit" :disabled="form.processing">
             Save changes
           </Button>
         </DialogFooter>
@@ -104,6 +109,9 @@
 </template>
 
 <script setup lang="ts">
+import { useForm } from '@inertiajs/vue3';
+import { Plus } from 'lucide-vue-next';
+import { ref } from 'vue';
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -117,9 +125,6 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import Textarea from '@/components/ui/textarea/Textarea.vue';
-import { useForm } from '@inertiajs/vue3';
-import { Plus } from 'lucide-vue-next';
 import {
   Select,
   SelectContent,
@@ -129,16 +134,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { TaskStatus } from '@/types/task';
-import { TaskPriority } from '@/types/task';
-import { User } from '@/types/usertype';
+import Textarea from '@/components/ui/textarea/Textarea.vue';
+import type { TaskStatus, TaskPriority } from '@/types/task';
+import type { User } from '@/types/usertype';
 
-defineProps<{
-    statuses: TaskStatus[],
-    priorities: TaskPriority[],
-    users: User[],
-
-
+const props = defineProps<{
+    project: { id: number };
+    statuses: TaskStatus[];
+    priorities: TaskPriority[];
+    users: User[];
 }>();
 
 const form = useForm({
@@ -150,10 +154,13 @@ const form = useForm({
     assign_to: '',
 })
 
-function addTask( id?: number) {
-    form.post(`admin/projects/${id}/tasks`, {
+const open = ref(false);
+
+function addTask() {
+    form.post(`/admin/projects/${props.project.id}/tasks`, {
         onSuccess: () => {
             form.reset();
+            open.value = false;
         }
     });
 }
