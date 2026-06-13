@@ -2,6 +2,7 @@
 import { LayoutGrid, Users, Settings, User2 } from 'lucide-vue-next';
 import AppSidebarLayout from '@/layouts/app/AppSidebarLayout.vue';
 import type { BreadcrumbItem, NavGroup } from '@/types';
+import ToastContainer from '@/components/ToastContainer.vue';
 
 
 const groups: NavGroup[] = [
@@ -21,5 +22,6 @@ const groups: NavGroup[] = [
 <template>
     <AppSidebarLayout  :groups="groups">
         <slot />
+         <ToastContainer />
     </AppSidebarLayout>
 </template>

@@ -104,6 +104,7 @@ import { User } from '@/types';
 import { Position } from '@/types/usertype';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { useToast } from '@/composables/useToast';
 const props = defineProps<{
     positions: Position[],
     roles: string[],
@@ -118,9 +119,11 @@ const form = useForm({
 })
 
 const open = ref(false);
+const {show} = useToast();
  function AddUser(){
     form.post('/admin/users',{
         onSuccess: () => {
+            show ('User Successfully Added');
             form.reset();
             open.value = false;
         },

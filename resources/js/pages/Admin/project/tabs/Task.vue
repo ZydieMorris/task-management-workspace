@@ -6,13 +6,19 @@
         <div class="flex justify-end">
             <AddTaskModal :project="projects" :statuses="statusNames" :priorities="priorities" :users="users"/>
         </div>
-
+        <!-- Task List -->
         <div class="mt-2">
             <Accordion type="single" collapsible class="w-full" >
-                <AccordionItem class="bg-gray-50 rounded " v-for="s in statuses" :key="s.name" :value="s.name">
-                <AccordionTrigger class="text-lg ">
-                    <div>
-                        {{ s.name }}
+                <AccordionItem class="bg-gray-50 rounded mb-5" v-for="s in statuses" :key="s.name" :value="s.name">
+                <AccordionTrigger class="text-lg">
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="text-xs px-2 py-0.5 rounded-full font-medium"
+                            :class="statusColors[s.name]"
+                        >
+                            {{ s.name }}
+                        </span>
+                        <span class="text-xs text-gray-400">({{ s.tasks.length }})</span>
                     </div>
                 </AccordionTrigger>
                <AccordionContent>
@@ -83,10 +89,9 @@
 
             </Accordion>
         </div>
-
     </div>
 
-   
+
   <!-- Detail / sidebar panel -->
 <div class="flex-[3] min-h-[30rem] bg-white border border-gray-200/60 p-4">
     <div v-if="!selectedTask" class="text-sm text-gray-400">
@@ -199,5 +204,13 @@ function openEdit(task: Task) {
 
 function deleteTask(taskId: number) {
     router.delete(`/admin/projects/${props.projects.id}/tasks/${taskId}`)
+}
+
+const statusColors: Record<string, string> = {
+    'To Do'       : 'bg-gray-100 text-gray-600',
+    'In Progress' : 'bg-blue-100 text-blue-600',
+    'For Checking': 'bg-yellow-100 text-yellow-600',
+    'On Hold'     : 'bg-orange-100 text-orange-600',
+    'Completed'   : 'bg-green-100 text-green-600',
 }
 </script>

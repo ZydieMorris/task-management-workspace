@@ -55,9 +55,14 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useToast } from '@/composables/useToast';
 import { useForm } from '@inertiajs/vue3';
 import { Plus } from 'lucide-vue-next';
 import { ref } from 'vue';
+
+const {show} = useToast();
+
+
 
 const form = useForm({
     position_name: '',
@@ -77,6 +82,7 @@ function submit() {
     }
     form.post('/admin/positions',{
         onSuccess: () => {
+            show ('Position Successfully Added');
             form.reset();
             open.value = false;
 
