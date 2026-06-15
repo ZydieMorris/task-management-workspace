@@ -19,6 +19,9 @@ class ProjectController extends Controller
         ->when($request->search, function($query) use ($request) {
             $query->where('project_name', 'like', '%' . $request->search . '%');
         })
+        ->when($request->severity, function($query) use ($request) {
+            $query->where('project_severity', $request->severity);
+        })
         ->get(),
     ]);
     }

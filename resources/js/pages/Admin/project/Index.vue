@@ -7,6 +7,13 @@ import { watchDebounced } from '@vueuse/core';
 import {ref} from 'vue';
 import {router} from '@inertiajs/vue3';
 import Input from '@/components/ui/input/Input.vue';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 const props = defineProps<{
     severity: string[],
@@ -16,6 +23,7 @@ const props = defineProps<{
 const showEditModal = ref(false);
 const selectedProject = ref(null);
 const search = ref('');
+const severity = ref('');
 
 function openEditModal(project: any) {
     selectedProject.value = project;
@@ -23,9 +31,9 @@ function openEditModal(project: any) {
 
 }
 
-watchDebounced(search,(newValue)=> {
-router.get('/admin/projects', {search:newValue}, {preserveState: true});
-})
+watchDebounced([search, severity],([newValue, newSeverity])=> {
+router.get('/admin/projects', {search:newValue, severity: newSeverity === 'all' ? null : newSeverity}, {preserveState: true});
+}, 500)
 
 
 </script>
@@ -34,7 +42,23 @@ router.get('/admin/projects', {search:newValue}, {preserveState: true});
     <div class="p-10">
 
         <div class="flex justify-between">
-            <Input v-model="search" placeholder="Search projects..." class="w-70"/>
+            <div class="flex items-center gap-4">
+                <Input v-model="search" placeholder="Search projects..." class="w-70"/>
+
+                
+                  <Select v-model="severity">
+                    <SelectTrigger>
+                    <SelectValue placeholder="Select Severity" />
+                    </SelectTrigger>
+                    <SelectContent>
+                    <SelectItem value="all">All Severities</SelectItem>
+                    <SelectItem v-for="s in severity" :key="s" :value="s">
+                        {{ s }}
+                    </SelectItem>
+                    </SelectContent>
+                </Select>
+
+            </div>
 
             <AddProjectModal :severity="severity"/>
         </div>

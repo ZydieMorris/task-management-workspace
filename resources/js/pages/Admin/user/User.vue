@@ -87,7 +87,14 @@ function onEdit(user: any){
 }
 
 watchDebounced([search, position, role],([newValue, newPosition, newRole]) => {
-    router.get('/admin/users', {search:newValue, position: newPosition === 'all' ? null : newPosition, role: newRole === 'all' ? null : newRole    }, {preserveState: true});
+    router.get('/admin/users', {
+        search:newValue,
+        position: newPosition === 'all' ? null : newPosition,
+        role: newRole === 'all' ? null : newRole 
+        }, 
+        {
+        preserveState: true
+        });
 }, 500);
 
 </script>
