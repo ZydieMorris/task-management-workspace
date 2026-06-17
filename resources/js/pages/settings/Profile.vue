@@ -3,9 +3,11 @@ import { Form, Head, usePage } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import SecurityController from '@/actions/App/Http/Controllers/Settings/SecurityController';
 import DeleteUser from '@/components/DeleteUser.vue';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
+import PasswordInput from '@/components/PasswordInput.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -97,6 +99,51 @@ const user = computed(() => page.props.auth.user);
                 <Button :disabled="processing" data-test="update-profile-button"
                     >Save</Button
                 >
+            </div>
+        </Form>
+    </div>
+
+    <div v-if="page.props.hasGoogleAccount" class="space-y-6">
+        <Heading
+            variant="small"
+            title="Set password"
+            description="Set a password for your account to also sign in with your email and password"
+        />
+
+        <Form
+            v-bind="SecurityController.setPassword.form()"
+            reset-on-success
+            class="space-y-6"
+            v-slot="{ errors, processing }"
+        >
+            <div class="grid gap-2">
+                <Label for="set_password">Password</Label>
+                <PasswordInput
+                    id="set_password"
+                    name="password"
+                    class="mt-1 block w-full"
+                    autocomplete="new-password"
+                    placeholder="Password"
+                />
+                <InputError :message="errors.password" />
+            </div>
+
+            <div class="grid gap-2">
+                <Label for="set_password_confirmation">Confirm password</Label>
+                <PasswordInput
+                    id="set_password_confirmation"
+                    name="password_confirmation"
+                    class="mt-1 block w-full"
+                    autocomplete="new-password"
+                    placeholder="Confirm password"
+                />
+                <InputError :message="errors.password_confirmation" />
+            </div>
+
+            <div class="flex items-center gap-4">
+                <Button :disabled="processing" data-test="set-password-button">
+                    Set password
+                </Button>
             </div>
         </Form>
     </div>

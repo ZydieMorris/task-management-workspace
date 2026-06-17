@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\PasswordUpdateRequest;
+use App\Http\Requests\Settings\SetPasswordRequest;
 use App\Http\Requests\Settings\TwoFactorAuthenticationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rules\Password;
@@ -60,6 +61,20 @@ class SecurityController extends Controller
         ]);
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Password updated.')]);
+
+        return back();
+    }
+
+    /**
+     * Set an initial password for Google-linked accounts.
+     */
+    public function setPassword(SetPasswordRequest $request): RedirectResponse
+    {
+        $request->user()->update([
+            'password' => $request->password,
+        ]);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Password set successfully.')]);
 
         return back();
     }
